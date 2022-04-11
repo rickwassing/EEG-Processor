@@ -92,4 +92,10 @@ As the name suggests, the EEG Processor can only import EEG data. Other neuroima
 
   select-and-preprocess.rst
 
+.. toctree::
+  :maxdepth: 1
+  :caption: Subject-level analyses
+
+  power-spectral-analysis.rst
+
 ----
