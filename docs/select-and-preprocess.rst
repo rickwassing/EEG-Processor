@@ -44,22 +44,40 @@ This video outlines the steps to (1) select a resting-state recording from an EE
 
     0:00 Introducing the example and ICA
 
-    1:47 Selecting the resting-state task from the task-battery
+    1:58 Selecting the resting-state task from the task-battery
 
-    6:45 Checking the new output files
+    9:00 Checking the new output files
 
-    7:54 Selecting the resting-state conditions
+    9:50 Selecting the resting-state conditions
 
-    10:47 Apply preprocessing and ICA to resting-state condition
+    12:52 Apply preprocessing and ICA to resting-state condition
 
-    14:32 Introducing rejection of components
+    16:00 Marking components for rejection
 
-    15:23 Marking components for rejection
-
-    32:18 Removing rejected components to create clean data ready for analysis
+    33:06 Removing rejected components to create clean data ready for analysis
 
 .. raw:: html
 
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/wFPbTSIn1UE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/c0cINx46Dak" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+----
+
+==================================
+Example: polysomnography recording
+==================================
+
+This video outlines the steps to select specific sleep stages and create clean output files ready for analysis.
+
+:Video chapters:
+
+    0:00 Select individual sleep stages
+    
+    4:01 Preprocess and clean the data
+
+    6:01 Further split the data into epochs
+
+.. raw:: html
+
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/QmNKJrUQoOk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ----

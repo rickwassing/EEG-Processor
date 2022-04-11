@@ -42,6 +42,11 @@ if ~isfield(Settings.EEG.event, 'is_reject')
     end
 end
 % ---------------------------------------------------------
+% Remove rejected components
+if Settings.Reject.Components
+    [Settings.EEG, Warnings] = Proc_RejectComponents(Settings.EEG, Warnings);
+end
+% ---------------------------------------------------------
 % Check if reject channels exist
 if ~isfield(Settings.EEG.etc, 'rej_channels')
     % If not any rejected channels are defined set all channels to false
@@ -64,11 +69,6 @@ end
 % Delete or interpolate rejected channels
 if Settings.Reject.Channels
     [Settings.EEG, Warnings] = Proc_RejectChannels(Settings.EEG, Settings.Reject, RejChans, Warnings);
-end
-% ---------------------------------------------------------
-% Remove rejected components
-if Settings.Reject.Components
-    [Settings.EEG, Warnings] = Proc_RejectComponents(Settings.EEG, Warnings);
 end
 % ---------------------------------------------------------
 % Select time

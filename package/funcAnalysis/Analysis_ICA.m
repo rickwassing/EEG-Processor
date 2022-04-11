@@ -15,9 +15,11 @@ if Settings.DoICA
         % We must filter the data above 1 Hz, so store the unfiltered data
         % so we can put it back later
         urdata = EEG.data;
-        % Apply 1 Hz highpass filter
-        FilterOrder = pop_firwsord('hamming', EEG.srate, 0.5);
-        EEG = pop_firws(EEG, 'fcutoff', 1, 'ftype', 'highpass', 'wtype', 'hamming', 'forder', FilterOrder, 'minphase', 0);
+        % Apply 2 Hz highpass filter
+        % Dimigen (2020) Optimizing the ICA-based removal of ocular EEG 
+        % artifacts from free viewing experiments. Neuroimage. (207) 116117
+        FilterOrder = pop_firwsord('hamming', EEG.srate, 2);
+        EEG = pop_firws(EEG, 'fcutoff', 2, 'ftype', 'highpass', 'wtype', 'hamming', 'forder', FilterOrder, 'minphase', 0);
         % Run ICA
         fprintf('>> BIDS: Performing independent component analysis on %i good EEG channels in file ''%s''.\n', length(Include), EEG.setname)
         T = now;
@@ -35,6 +37,8 @@ if Settings.DoICA
                 'extended', 1 ...
                 );
         end
+        % Automatic classification of components
+        EEG = pop_iclabel(EEG, 'default');
         % Put the non-filtered data back
         EEG.data = urdata;
         fprintf(' - Finished in %s\n', datestr(now-T, 'HH:MM:SS'))

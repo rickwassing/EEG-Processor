@@ -44,7 +44,7 @@ Authors
 Download
 --------
 
-Click `here to download <https://github.com/rickwassing/EEG_Processor/archive/refs/heads/main.zip>`_ the EEG Processor application and all its Matlab code.
+Click `here to download <https://github.com/rickwassing/EEG-Processor/archive/refs/heads/main.zip>`_ the EEG Processor application and all its Matlab code.
 
 Dependencies
 ------------
