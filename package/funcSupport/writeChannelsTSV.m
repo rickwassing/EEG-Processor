@@ -34,11 +34,16 @@ for i = 1:length(EEG.chanlocs)
         Channels.reference{i, 1} = EEG.chanlocs(i).ref;
     end
 end
+% First, set all channels to be "good" and description to "n/a"
+Channels.status = repmat({'good'}, length(EEG.chanlocs), 1);
+Channels.description = repmat({'n/a'}, length(EEG.chanlocs), 1);
+% Second, if there are bad channels, set them to "bad"
 if isfield(EEG.etc, 'rej_channels')
-    Channels.status = repmat({'good'}, length(EEG.chanlocs), 1);
     Channels.status(ismember(Channels.name, EEG.etc.rej_channels)) = {'bad'};
-else
-    Channels.status = repmat({'good'}, length(EEG.chanlocs), 1);
+end
+% Third, if there are interpolated channels, set the description to "interpolated"
+if isfield(EEG.etc, 'interp_channels')
+    Channels.description(ismember(Channels.name, EEG.etc.interp_channels)) = {'interpolated'};
 end
 % empty cells are not allowed
 Channels.name(ismissing(Channels.name)) = {'n/a'};

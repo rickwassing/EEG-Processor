@@ -39,6 +39,18 @@ if Settings.DoICA
         end
         % Automatic classification of components
         EEG = pop_iclabel(EEG, 'default');
+        % Automatically flag components for rejection if their probability
+        % to be eye, heart, or muscle artefact is over 80%
+        EEG = pop_icflag(EEG, [...
+            NaN, NaN; ... % Brain
+            0.8, 1; ...   % Muscle
+            0.8, 1; ...   % Eye
+            0.8, 1; ...   % Heart
+            NaN, NaN; ... % Line noise
+            NaN, NaN; ... % Channel noise
+            NaN NaN ...   % Other
+            ]);
+        EEG.etc.rej_components = find(EEG.reject.gcompreject);
         % Put the non-filtered data back
         EEG.data = urdata;
         fprintf(' - Finished in %s\n', datestr(now-T, 'HH:MM:SS'))

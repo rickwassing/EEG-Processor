@@ -10,6 +10,8 @@ Subjects.Entities = {};
 Dirs = dir([app.State.Protocol.Path, '/rawdata/sub-*']);
 tmp = dir([app.State.Protocol.Path, '/derivatives/*/sub-*']);
 Dirs = [Dirs; tmp];
+% Filter out any non-directory
+Dirs = Dirs([Dirs.isdir] == 1);
 % Get all the unique directory names
 [~, idx] = unique({Dirs.name});
 % ---------------------------------------------------------
