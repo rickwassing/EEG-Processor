@@ -113,9 +113,9 @@ end
         % Create the command
         ArgIn = strrep(Path, '/', filesep);
         if ispc
-            cmd = ['del \f ', ArgIn];
+            cmd = ['del \f "', ArgIn, '"'];
         else
-            cmd = ['rm -f ', ArgIn];
+            cmd = ['rm -f "', ArgIn, '"'];
         end
         % ---------------------------------------------------------
         % Run command

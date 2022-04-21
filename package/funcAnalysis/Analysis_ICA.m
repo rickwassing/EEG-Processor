@@ -50,7 +50,7 @@ if Settings.DoICA
             NaN, NaN; ... % Channel noise
             NaN NaN ...   % Other
             ]);
-        EEG.etc.rej_components = find(EEG.reject.gcompreject);
+        EEG.etc.rej_components = asrow(find(EEG.reject.gcompreject));
         % Put the non-filtered data back
         EEG.data = urdata;
         fprintf(' - Finished in %s\n', datestr(now-T, 'HH:MM:SS'))

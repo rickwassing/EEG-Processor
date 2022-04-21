@@ -4,9 +4,9 @@ function CreateNewDirectory(Path)
 Path = strrep(Path, '/', filesep);
 % Run command
 if ispc
-    [status, cmdout] = system(['mkdir ', Path]);
+    [status, cmdout] = system(['mkdir "', Path, '"']);
 else
-    [status, cmdout] = system(['mkdir -p ', Path]);
+    [status, cmdout] = system(['mkdir -p "', Path, '"']);
 end
 % Check output of the command
 if status ~= 0 && ~regexpIdx(cmdout, 'already exists')

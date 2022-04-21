@@ -88,9 +88,9 @@ for i = 1:length(Files2Process)
     OSNewFullFilePath = strrep(NewFullFilePath, '/', filesep);
     if ispc
         [~, OSNewFileName] = fileparts(OSNewFullFilePath);
-        cmd = ['Rename ', OSOldFullFilePath, ' ', OSNewFileName, Extension];
+        cmd = ['Rename "', OSOldFullFilePath, '" ', OSNewFileName, Extension];
     else
-        cmd = ['mv ', OSOldFullFilePath, ' ', OSNewFullFilePath];
+        cmd = ['mv "', OSOldFullFilePath,'" "', OSNewFullFilePath, '"'];
     end
     % ---------------------------------------------------------
     % Run command

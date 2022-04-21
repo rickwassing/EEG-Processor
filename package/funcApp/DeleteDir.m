@@ -16,9 +16,9 @@ end % Ok, directory exists, go on to delete it and all its contents
 % ---------------------------------------------------------
 % Create the command
 if ispc
-    cmd =  ['rd /s /q ', path];
+    cmd =  ['rd /s /q "', path, '"'];
 else
-    cmd =  ['rm -rf ', path];
+    cmd =  ['rm -rf "', path, '"'];
 end
 % ---------------------------------------------------------
 % Print to command window

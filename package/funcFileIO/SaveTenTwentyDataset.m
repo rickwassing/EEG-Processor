@@ -102,6 +102,7 @@ for i = 1:length(EEG.event)
         EEG.event(i).latency = 1;
     end
 end
+keyboard
 pop_writeeeg(EEG, [Settings.Path, '.edf'], 'TYPE', 'EDF');
 % ---------------------------------------------------------
 % Update JSON

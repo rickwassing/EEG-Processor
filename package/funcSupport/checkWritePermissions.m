@@ -13,15 +13,15 @@ try
     fclose(fid);
     delete([path, '/check-permissions.txt']);
     % try to create a directory
-    [status, cmdout] = system(['mkdir ', path, filesep, 'test']);
+    [status, cmdout] = system(['mkdir "', path, filesep, 'test"']);
     if status ~= 0
         error(cmdout);
     end
     % try to rename directory
     if ispc
-        cmd = ['Rename ', path, filesep, 'test testing'];
+        cmd = ['Rename "', path, filesep, 'test" testing'];
     else
-        cmd = ['mv ', path, filesep, 'test', ' ', path, filesep, 'testing'];
+        cmd = ['mv "', path, filesep, 'test" "', path, filesep, 'testing"'];
     end
     [status, cmdout] = system(cmd);
     if status ~= 0
@@ -29,9 +29,9 @@ try
     end
     % try to delete dir
     if ispc
-        cmd =  ['rd /s /q ', path, filesep, 'testing'];
+        cmd =  ['rd /s /q "', path, filesep, 'testing"'];
     else
-        cmd =  ['rm -rf ', path, filesep, 'testing'];
+        cmd =  ['rm -rf "', path, filesep, 'testing"'];
     end
     [status, cmdout] = system(cmd);
     if status ~= 0

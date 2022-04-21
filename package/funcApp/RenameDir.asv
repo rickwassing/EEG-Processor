@@ -22,9 +22,9 @@ for i = 1:length(idxSub)
     % ---------------------------------------------------------
     % Create command
     if ispc
-        cmd = ['Rename ', strrep(thisPath, '/', filesep), ' ', Name];
+        cmd = ['Rename "', strrep(thisPath, '/', filesep), '" ', Name];
     else
-        cmd = ['mv ', thisPath, ' ', newPath];
+        cmd = ['mv "', thisPath, '" "', newPath, '"'];
     end
     % ---------------------------------------------------------
     % Now run the command
