@@ -15,6 +15,7 @@ end
 % Save dataset
 if strcmpi(Part, 'all')
     fprintf('>> BIDS: Saving dataset to ''%s''\n', EEG.setname)
+    EEG = eeg_checkset(EEG, 'eventconsistency');
     EEG = pop_saveset(EEG, [EEG.filepath, '/', EEG.filename]);
     EEG.filepath = strrep(EEG.filepath, filesep, '/');
 end
@@ -22,6 +23,7 @@ end
 % Save Header 
 if strcmpi(Part, 'header')
     fprintf('>> BIDS: Saving header info to ''%s''\n', EEG.setname)
+    EEG = eeg_checkset(EEG, 'eventconsistency');
     save([EEG.filepath, '/', EEG.filename], '-v7.3', '-mat', 'EEG');
 end
 % ---------------------------------------------------------

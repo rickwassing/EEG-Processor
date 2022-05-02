@@ -158,7 +158,9 @@ else % Use the event onset and duration
                 tmpeeg(i).event(:) = [];
                 continue
             end
-            fprintf('>> BIDS: Removing %.3f s of rejected epochs in dataset %i of %i\n', sum(SelIdx & TimeSelIdx & RejIdx)/EEG.srate, i, length(EventSelSettings.Labels))
+            if RejSettings.Epochs
+                fprintf('>> BIDS: Removing %.3f s of rejected epochs in dataset %i of %i\n', sum(SelIdx & TimeSelIdx & RejIdx)/EEG.srate, i, length(EventSelSettings.Labels))
+            end
             [PointOnset, PointDuration] = idx2bouts(SelIdx & TimeSelIdx & ~RejIdx);
             tmpeeg(i) = pop_select(EEG, 'point', [PointOnset, PointOnset+PointDuration]);
             % make sure there is an 'id' and 'is_reject' value for each event

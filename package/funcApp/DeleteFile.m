@@ -18,11 +18,11 @@ if isempty(Files2Process)
 end % Ok, go on to delete these files
 % ---------------------------------------------------------
 % Create the command
-ArgIn = strrep([Path, '/', RootName, '_*.*'], '/', filesep);
+ArgIn = strrep(['"', Path, '"/', RootName, '_*'], '/', filesep);
 if ispc
-    cmd = ['del \f "', ArgIn, '"'];
+    cmd = ['del \f ', ArgIn];
 else
-    cmd = ['rm -f "', ArgIn, '"'];
+    cmd = ['rm -f -v ', ArgIn];
 end
 % ---------------------------------------------------------
 % Run command
