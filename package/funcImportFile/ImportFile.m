@@ -63,7 +63,7 @@ if strcmpi(Import.DataFile.Type, 'MFF') || strcmpi(Import.DataFile.Type, 'COMPU2
     % Or in case of the TEN-TWENTY type, set the reference channels
 elseif strcmpi(Import.DataFile.Type, 'TENTWENTY')
     for i = 1:EEG.nbchan
-        if strcmpi(EEG.chanlocs(i).type, 'PNS')
+        if ~strcmpi(EEG.chanlocs(i).type, 'EEG')
             continue
         else
             switch EEG.chanlocs(i).labels(end)

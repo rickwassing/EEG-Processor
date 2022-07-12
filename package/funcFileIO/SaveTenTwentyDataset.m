@@ -70,6 +70,12 @@ end
 % Update number of channels
 EEG.nbchan = size(EEG.data, 1);
 % ---------------------------------------------------------
+% If this is a PSG recording, crop to a multiple of 30 second epochs
+if isfield(EEG.etc, 'stages')
+    crop = floor(EEG.pnts/(30*EEG.srate))*30*EEG.srate;
+    EEG = pop_select(EEG, 'point', [1 crop]);
+end
+% ---------------------------------------------------------
 % Filter the data
 EEG = pop_firws(EEG, ...
     'fcutoff', [0.25 45], ...
@@ -102,7 +108,6 @@ for i = 1:length(EEG.event)
         EEG.event(i).latency = 1;
     end
 end
-keyboard
 pop_writeeeg(EEG, [Settings.Path, '.edf'], 'TYPE', 'EDF');
 % ---------------------------------------------------------
 % Update JSON

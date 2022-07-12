@@ -71,7 +71,7 @@ switch Extension
         end
         if isfield(hdr.orig, 'chanlocs')
             EEG.chanlocs = hdr.orig.chanlocs;
-        else
+        elseif isfield(hdr, 'elec')
             % Create temporary chanloc file
             tmplocs = struct();
             for i = 1:length(hdr.elec.label)
@@ -90,38 +90,42 @@ switch Extension
                 EEG.chanlocs(i).unit = hdr.chanunit{i};
                 EEG.chanlocs(i).ref = strsplit(Channels.reference{i}, ' ');
             end
+        else
+            EEG.chanlocs = translateChanlocs(hdr);
         end
         % ---------------------------------------------------------
         % CHANNEL INFO
-        Coordinates = jsondecode(fileread(CoordFilename));
-        if isfield(hdr.orig, 'chaninfo')
-            EEG.chaninfo = hdr.orig.chaninfo;
-        else
-            EEG.chaninfo = struct();
-            Labels = fieldnames(Coordinates.AnatomicalLandmarkCoordinates);
-            for i = 1:length(Labels)
-                EEG.chaninfo.ndchanlocs(i).labels = Labels{i};
-                EEG.chaninfo.ndchanlocs(i).X = Coordinates.AnatomicalLandmarkCoordinates.(Labels{i})(1);
-                EEG.chaninfo.ndchanlocs(i).Y = Coordinates.AnatomicalLandmarkCoordinates.(Labels{i})(2);
-                EEG.chaninfo.ndchanlocs(i).Z = Coordinates.AnatomicalLandmarkCoordinates.(Labels{i})(3);
-                EEG.chaninfo.ndchanlocs(i).type = 'FID';
-            end
-            EEG.chaninfo.filename = CoordFilename;
-            EEG.chaninfo.plotrad = [];
-            EEG.chaninfo.shrink = [];
-            switch Coordinates.EEGCoordinateSystem
-                case {'ALS', 'ARS'}
-                    EEG.chaninfo.nosedir = '+X';
-                case {'PLS', 'PRS'}
-                    EEG.chaninfo.nosedir = '-X';
-                case {'LAS', 'RAS'}
-                    EEG.chaninfo.nosedir = '+Y';
-                case {'LPS', 'RPS'}
-                    EEG.chaninfo.nosedir = '-Y';
-                case {'LSA', 'RSA'}
-                    EEG.chaninfo.nosedir = '+Z';
-                case {'LSP', 'RSP'}
-                    EEG.chaninfo.nosedir = '-Z';
+        if exist(CoordFilename, 'file') == 2
+            Coordinates = jsondecode(fileread(CoordFilename));
+            if isfield(hdr.orig, 'chaninfo')
+                EEG.chaninfo = hdr.orig.chaninfo;
+            else
+                EEG.chaninfo = struct();
+                Labels = fieldnames(Coordinates.AnatomicalLandmarkCoordinates);
+                for i = 1:length(Labels)
+                    EEG.chaninfo.ndchanlocs(i).labels = Labels{i};
+                    EEG.chaninfo.ndchanlocs(i).X = Coordinates.AnatomicalLandmarkCoordinates.(Labels{i})(1);
+                    EEG.chaninfo.ndchanlocs(i).Y = Coordinates.AnatomicalLandmarkCoordinates.(Labels{i})(2);
+                    EEG.chaninfo.ndchanlocs(i).Z = Coordinates.AnatomicalLandmarkCoordinates.(Labels{i})(3);
+                    EEG.chaninfo.ndchanlocs(i).type = 'FID';
+                end
+                EEG.chaninfo.filename = CoordFilename;
+                EEG.chaninfo.plotrad = [];
+                EEG.chaninfo.shrink = [];
+                switch Coordinates.EEGCoordinateSystem
+                    case {'ALS', 'ARS'}
+                        EEG.chaninfo.nosedir = '+X';
+                    case {'PLS', 'PRS'}
+                        EEG.chaninfo.nosedir = '-X';
+                    case {'LAS', 'RAS'}
+                        EEG.chaninfo.nosedir = '+Y';
+                    case {'LPS', 'RPS'}
+                        EEG.chaninfo.nosedir = '-Y';
+                    case {'LSA', 'RSA'}
+                        EEG.chaninfo.nosedir = '+Z';
+                    case {'LSP', 'RSP'}
+                        EEG.chaninfo.nosedir = '-Z';
+                end
             end
         end
         % ---------------------------------------------------------
@@ -152,8 +156,13 @@ switch Extension
             EEG.data = single(ft_read_data([EEG.filepath, '/', EEG.filename]));
             EEG.filepath = strrep(EEG.filepath, filesep, '/');
             % If it was an EDF file, the last channel is the event channel
-            % and can be removed
+            % and it won't appear in the chanloc struct, which can be removed
             EEG.data(length(EEG.chanlocs)+1:end, :) = [];
+            % Make sure EEG channels appear first
+            eegChans = strcmpi({EEG.chanlocs.type}, 'EEG');
+            EEG.chanlocs = [EEG.chanlocs(eegChans), EEG.chanlocs(~eegChans)];
+            EEG.data = [EEG.data(eegChans, :, :); EEG.data(~eegChans, :, :)];
+            % update number of channels
             EEG.nbchan = size(EEG.data, 1);
             disp('>> - Finished loading')
         end

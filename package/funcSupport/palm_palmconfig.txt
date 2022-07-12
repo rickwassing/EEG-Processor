@@ -1,0 +1,10 @@
+# Configuration file for PALM.
+# Version (github, running in MATLAB 9.11.0.1769968 (R2021b).
+# 16-Jun-2022 12:57:06
+
+-i /Users/rickwassing/Documents/Projects/202009_BIDS-processor/testdata/Y.csv
+-d /Users/rickwassing/Documents/Projects/202009_BIDS-processor/testdata/M.csv
+-t /Users/rickwassing/Documents/Projects/202009_BIDS-processor/testdata/C.csv
+-n 1000
+-ee
+-twotail

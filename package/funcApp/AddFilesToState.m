@@ -21,6 +21,10 @@ for k = 1:length(newFiles)
             Files.Entities.(id).JSON = struct();
         else
             Files.Entities.(id).JSON = json2struct([jsonFile(1).folder, '/', jsonFile(1).name]);
+            % Make sure some expected fields are included
+            if ~isfield(Files.Entities.(id).JSON, 'TrialCount')
+                Files.Entities.(id).JSON.TrialCount = 1;
+            end
         end
         Files.Entities.(id).Status = 'idle';
     catch ME
